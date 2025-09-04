@@ -1,2 +1,40 @@
 parent div -> vh, vw
 child div -> %
+
+"list": [
+    {
+        "dt": 1756980000,
+        "sunrise": 1756956406,
+        "sunset": 1757005773,
+        "temp": {
+        "day": 23.1,
+        "min": 15.31,
+        "max": 23.33,
+        "night": 17.52,
+        "eve": 20.8,
+        "morn": 15.44
+        },
+        "feels_like": {
+        "day": 23.22,
+        "night": 17.6,
+        "eve": 21.05,
+        "morn": 15.62
+        },
+        "pressure": 1017,
+        "humidity": 67,
+        "weather": [
+        {
+            "id": 500,
+            "main": "Rain",
+            "description": "light rain",
+            "icon": "10d"
+        }
+        ],
+        "speed": 2.2,
+        "deg": 244,
+        "gust": 2.89,
+        "clouds": 47,
+        "pop": 1,
+        "rain": 0.41
+    },
+]
