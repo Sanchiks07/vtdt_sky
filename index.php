@@ -47,7 +47,13 @@
         <div class="current-weather">
             <p>Current Weather</p>
             <p><strong>Local time: <?php echo date('g:i A'); ?></strong></p>
-            <p><?php echo number_format($temp, 1); ?>°C</p>
+            <div class="weather-main-row">
+                <span class="weather-temp"><?php echo number_format($temp, 1); ?></span>
+                <span class="weather-side">
+                    <span><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></span>
+                    <span>Feels Like <?php echo number_format($feelsLike, 1); ?>°C</span>
+                </span>
+            </div>
             <p>
                 Current wind direction: 
                 <?php 
@@ -55,8 +61,6 @@
                     echo windDirection($deg);
                 ?>
             </p>
-            <p><?php echo $weatherData['list'][0]['weather'][0]['description']; ?></p>
-            <p>Feels like: <?php echo number_format($feelsLike, 1); ?>°C</p>
         </div>
 
         <div class="air-quality">
@@ -64,7 +68,7 @@
         </div>
         
         <div class="wind">
-            <p>Wind Speed</p>
+            <p>Wind</p>
             <p>
                 <?php 
                     $windKmh = $weatherData['list'][0]['speed'] * 3.6;

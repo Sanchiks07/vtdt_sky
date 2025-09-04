@@ -24,6 +24,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     background-color: rgb(241, 241, 241);
+    font-family: Arial, sans-serif;
 }
 
 .container{
@@ -105,4 +106,46 @@ body {
     grid-column: 4/6;
     grid-row: 2/9;
     margin-right: 30px;
+}
+
+.current-weather .weather-main-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin: 10px 0 10px 0;
+}
+
+.weather-temp {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.weather-temp::after {
+    content: "°C";
+    font-size: 25px;
+    position: absolute;
+    top: 0;
+    right: -28px;
+    font-weight: normal;
+}
+
+.weather-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 160px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.current-weather p strong {
+    font-size: 19px;
+}
+
+.current-weather p {
+    margin-bottom: 8px;
 }
