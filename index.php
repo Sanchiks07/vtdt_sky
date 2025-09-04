@@ -99,6 +99,8 @@
 
         <div class="sun-moon">
             <p>Sun & Moon Summary</p>
+            <p>Sunrise <?php echo date('g:i A', $weatherData['list'][0]['sunrise']); ?></p>
+            <p>Sunset <?php echo date('g:i A', $weatherData['list'][0]['sunset']); ?></p>
         </div>
 
         <div class="days">
