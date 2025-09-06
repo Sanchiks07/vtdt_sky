@@ -149,3 +149,26 @@ document.addEventListener("DOMContentLoaded", () => {
     convertForecastTemps(unitSelect.value); // convert default
     document.querySelector('.days button[data-day="today"]').classList.add("active");
 });
+
+// ----------LIGHT/DARK MODE----------
+const lightDarkBtn = document.querySelector('.light-dark');
+const themeIcon = lightDarkBtn.querySelector('.theme-icon');
+const themeText = lightDarkBtn.querySelector('.theme-text');
+
+// default mode
+document.body.classList.add('light-mode');
+
+lightDarkBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+        themeIcon.src = 'dark.png';
+        themeIcon.alt = 'Dark Mode';
+        themeText.textContent = 'Dark';
+    } else {
+        themeIcon.src = 'light.png';
+        themeIcon.alt = 'Light Mode';
+        themeText.textContent = 'Light';
+    }
+});

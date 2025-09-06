@@ -28,22 +28,91 @@ body {
 }
 
 /* ----------NAVBAR---------- */
+
 .navbar {
     grid-column: 1/6;
     grid-row: 1;
     position: sticky;
+    top: 0;
     z-index: 100;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 40px;
-    padding: 5px 0;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 60px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 25px;
+}
+
+.nav-menu img {
+    height: 30px;
+    width: auto;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #018aec;
+}
+
+.nav-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-right img {
+    height: 35px;
+    width: auto;
 }
 
 .navbar button:not(.light-dark) {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.nav-center input {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: solid 2px #ccc;
+    font-size: 16px;
+    width: 200px;
+}
+
+.nav-center input:focus {
+    outline: none;
+    border: solid 2px #202932;
+}
+
+.nav-center input::placeholder {
+    color: #888;
+    font-weight: 500;
 }
 
 .navbar button.light-dark {
@@ -53,7 +122,7 @@ body {
     background-color: #202932;
     border: none;
     border-radius: 8px;
-    padding: 12px 12px;
+    padding: 8px 12px;
     cursor: pointer;
     color: white;
     font-size: 16px;
@@ -71,7 +140,7 @@ body {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto repeat(5, 1fr);
     gap: 30px;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 120px);
     padding: 0 30px 30px;
     box-sizing: border-box;
 }
@@ -364,4 +433,68 @@ img {
 
 .days button.active::after {
     width: 100%;
+}
+
+/* ----------LIGHT/DARK MODE---------- */
+body.light-mode {
+    background-color: rgb(241, 241, 241);
+    color: black;
+}
+
+body.dark-mode {
+    background-color: #202f3d;
+    color: white;
+}
+
+body.light-mode .current-weather, body.light-mode .air-quality, body.light-mode .wind,
+body.light-mode .humidity, body.light-mode .visibility, body.light-mode .pressure-in,
+body.light-mode .pressure, body.light-mode .sun-moon, body.light-mode .days {
+    background-color: white;
+    color: black;
+}
+
+body.dark-mode .current-weather, body.dark-mode .air-quality, body.dark-mode .wind,
+body.dark-mode .humidity, body.dark-mode .visibility, body.dark-mode .pressure-in,
+body.dark-mode .pressure, body.dark-mode .sun-moon, body.dark-mode .days, .dark-mode .navbar {
+    background-color: #4e5b69;
+    color: white;
+}
+.nav-center button.light-dark:hover {
+    background-color: #1b262c;
+}
+
+body.dark-mode .days button {
+    color: white;
+    border-color: #555;
+}
+
+body.dark-mode .days button.active::after {
+    background-color: white;
+}
+
+body.dark-mode .nav-menu p,
+body.dark-mode .nav-location p {
+    color: white;
+}
+
+body.dark-mode .nav-search-mode input {
+    background-color: #1f2933;
+    color: white;
+    border: 1px solid #555;
+}
+
+body.dark-mode .current-weather select {
+    background-color: #344251;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 6px 10px;
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+}
+
+body.dark-mode .current-weather select option {
+    background-color: #1f2933;
+    color: white;
 }

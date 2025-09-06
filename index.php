@@ -44,27 +44,33 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <span class="title">
-            <button><img src="menu.png" alt="Menu"></img></button>
-            <p>VTDT Sky</p>
-        </span>
-        <span class="location">
-            <img src="location.gif" alt="Location">
-                <?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country'] ?>
-            </img>
-        </span>
-        <span class="search-switch">
-            <input type="text" placeholder="Search city...">
-            <button class="light-dark"><img src="light.png"></img>Light</button>
-        </span>
-        <span class="notif-set">
-            <button><img src="notifications.gif" alt="Notifications"></img></button>
-            <button><img src="settings.gif" alt="Settings"></img></button>
-        </span>
-    </nav>
-
     <div class="container">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="nav-menu">
+                    <button><img src="menu.png" alt="Menu"></button>
+                    <a href="">VTDT Sky</a>
+                </div>
+                <div class="nav-location">
+                    <img src="location.gif" alt="Location">
+                    <p><?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country']; ?></p>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <input type="text" placeholder="Search Location">
+                <button class="light-dark">
+                    <img src="light.png" alt="Light Mode" class="theme-icon"> 
+                    <span class="theme-text">Light</span>
+                </button>
+            </div>
+
+            <div class="nav-right">
+                <button><img src="notifications.gif" alt="Notifications"></button>
+                <button><img src="settings.gif" alt="Settings"></button>
+            </div>
+        </nav>
+
         <div class="current-weather">
             <div class="weather-header">
                 <p>Current Weather</p>
