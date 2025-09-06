@@ -4,11 +4,11 @@ const unitSelect = document.getElementById('unit-select'); // dabūju no stackov
 
 function convertForecastTemps(unit) {
     document.querySelectorAll('.forecast-temp').forEach(el => {
-        const c = el.getAttribute('data-c'); //galvenā temp
-        const feels = el.getAttribute('data-feels'); // feels like temp
-        const cDay = el.getAttribute('data-c-day'); // preikš 10 days diena
-        const cNight = el.getAttribute('data-c-night'); // priekš 10 days nakts
-        const desc = el.getAttribute('data-desc') || ""; // priekš 10 days apraksts
+        const c = el.getAttribute('data-c'); // today un tomorrow main temp
+        const feels = el.getAttribute('data-feels'); // today un tomorrow feels like
+        const cDay = el.getAttribute('data-c-day'); // 10 days temp
+        const wind = el.getAttribute('data-wind'); // 10 days wind
+        const humidity = el.getAttribute('data-humidity'); // 10 days humidity
 
         if (c && feels) {
             // today un tomorrow
@@ -17,12 +17,21 @@ function convertForecastTemps(unit) {
             } else {
                 el.textContent = parseFloat(c).toFixed(1) + "°C / Feels like " + parseFloat(feels).toFixed(1) + "°C";
             }
-        } else if (cDay && cNight) {
+        } else if (cDay && wind && humidity) {
             // 10 days
-            if(unit === 'FM') {
-                el.textContent = ((parseFloat(cDay)*9/5)+32).toFixed(1) + "°F / " + ((parseFloat(cNight)*9/5)+32).toFixed(1) + "°F, " + desc;
+            const tempEl = el.querySelector('.temp'); 
+            const detailsEl = el.querySelector('.details');
+            const windNum = parseFloat(wind); // nodrošina, ka wind ir nummurs
+
+            if (unit === 'FM') {
+                const tempF = ((parseFloat(cDay) * 9/5) + 32).toFixed(1);
+                const windMph = (parseFloat(windNum) / 1.609).toFixed(1);
+                tempEl.textContent = `${tempF}°F`;
+                detailsEl.innerHTML = `<div>Wind: ${windMph} mph</div><div>Humidity: ${humidity}%</div>`;
             } else {
-                el.textContent = parseFloat(cDay).toFixed(1) + "°C / " + parseFloat(cNight).toFixed(1) + "°C, " + desc;
+                const windKmh = windNum.toFixed(1); 
+                tempEl.textContent = `${parseFloat(cDay).toFixed(1)}°C`;
+                detailsEl.innerHTML = `<div>Wind: ${windKmh} km/h</div><div>Humidity: ${humidity}%</div>`;
             }
         }
     });
@@ -93,14 +102,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function render10Days() {
-        return `<div class="forecast-block">` + weatherData.list.slice(2,12).map((day,i)=>`
-            <div class="forecast-row">
-                <div class="forecast-time">Day ${i+1}</div>
-                <div class="forecast-temp" data-c-day="${day.temp.day}" data-c-night="${day.temp.night}" data-desc="${day.weather[0].description}">
-                    ${day.temp.day}°C / ${day.temp.night}°C, ${day.weather[0].description}
+        return `<div class="forecast-block">` + weatherData.list.slice(2,12).map((day)=>{
+            const date = new Date(day.dt * 1000); //no api iegūst dt value un konvertē uz ms
+
+            // dabū nedēļas dienu no datuma
+            const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+
+            // format date as yyyy-mm-dd
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth()+1).padStart(2,'0');
+            const dd = String(date.getDate()).padStart(2,'0');
+            const dateString = yyyy + '-' + mm + '-' + dd; // output izskatās šādi: 2025-09-06
+
+            return `
+                <div class="forecast-row">
+                    <div class="forecast-time">
+                        <div class="day-name">${dayName}</div>
+                        <div class="date">${dateString}</div>
+                    </div>
+                    <div class="forecast-temp" data-c-day="${day.temp.day}" data-wind="${day.speed}" data-humidity="${day.humidity}">
+                        <div class="temp">${day.temp.day}°C</div>
+                        <div class="details">
+                            <div>Wind: ${day.speed} km/h</div>
+                            <div>Humidity: ${day.humidity}%</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        `).join('') + `</div>`;
+            `;
+        }).join('') + `</div>`;
     }
 
     const forecasts = { today: renderToday, tomorrow: renderTomorrow, "10days": render10Days };

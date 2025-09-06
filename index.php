@@ -156,7 +156,7 @@
 
         <div class="sun-moon">
             <span class="sun-moon-left">
-                <p>Sun & Moon Summary</p>
+                <p>Sun Summary</p>
                 <span class="sun-air">
                     <img src="sun.gif" alt="Sun" class="sun">
                     <span class="air-column">
@@ -178,10 +178,11 @@
         </div>
 
         <div class="days">
-            <button data-day="today">Today</button>
-            <button data-day="tomorrow">Tomorrow</button>
-            <button data-day="10days">10 Days</button>
-
+            <div class="days-buttons">
+                <button data-day="today">Today</button>
+                <button data-day="tomorrow">Tomorrow</button>
+                <button data-day="10days">10 Days</button>
+            </div>
             <div id="days-content"></div><!-- izvada iegūtos forecast datus no sript.js -->
         </div>
     </div>

@@ -128,6 +128,9 @@ body {
 .days {
     grid-column: 4/6;
     grid-row: 2/7;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
 }
 
 /* ----------CURRENT WEATHER DATA---------- */
@@ -262,9 +265,8 @@ img {
 
 /* ----------DAYS FORECAST---------- */
 #days-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .forecast-row {
@@ -284,8 +286,38 @@ img {
 
 .forecast-temp {
     flex: 1;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 25px;
     padding-left: 20px;
+}
+
+.forecast-temp .temp {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #222;
+    min-width: 70px;
+    text-align: right;
+}
+
+.forecast-temp .details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: right;
+}
+
+.forecast-row::after {
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: 50%;
+    width: 2px;
+    background-color: #202932;
+    transform: translateX(-50%);
 }
 
 .forecast-row::after {
@@ -297,6 +329,12 @@ img {
     width: 2px;
     background-color: #202932;
     transform: translateX(-50%);
+}
+
+.days-buttons {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
 }
 
 .days button {
