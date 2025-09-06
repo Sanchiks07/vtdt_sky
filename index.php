@@ -1,8 +1,14 @@
 <?php
     $data = file_get_contents("https://emo.lv/weather-api/forecast/?city=cesis,latvia");
     $weatherData = json_decode($data, true);
-    date_default_timezone_set('Europe/Riga');
 
+    // laika josla no api
+    $timezoneOffsetSeconds = $weatherData['city']['timezone'];
+    $hoursOffset = $timezoneOffsetSeconds / 3600;
+
+    date_default_timezone_set(sprintf('Etc/GMT%+d', -$hoursOffset)); //php manual
+
+    // aprēķina vēja virzienu no grādiem
     function windDirection($deg) {
         $directions = [
             'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
@@ -11,6 +17,7 @@
         return $directions[round($deg / 22.5) % 16];
     }
 
+    // izvēlas pareizo temp pēc diennakts laika
     $hour = (int)date('G');
 
     if ($hour >= 12 && $hour < 18) {
@@ -61,17 +68,21 @@
         <div class="current-weather">
             <div class="weather-header">
                 <p>Current Weather</p>
-                <select>
-                    <option value="CK">Celsius and Kilometers</option>
+                <select id="unit-select">
+                    <option selected value="CK">Celsius and Kilometers</option>
                     <option value="FM">Fahrenheit and Miles</option>
                 </select>
             </div>
             <p><strong>Local time: <?php echo date('g:i A'); ?></strong></p>
             <div class="weather-main-row">
-                <span class="weather-temp"><?php echo number_format($temp, 1); ?></span>
+                <span class="weather-temp" data-c="<?php echo $temp; ?>">
+                    <?php echo number_format($temp, 1); ?>°C
+                </span>
                 <span class="weather-side">
                     <p><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></p>
-                    <p>Feels Like <?php echo number_format($feelsLike, 1) . "°C"; ?></p>
+                    <p class="feels-like" data-c="<?php echo $feelsLike; ?>">
+                        Feels Like <?php echo number_format($feelsLike, 1); ?>°C
+                    </p>
                 </span>
             </div>
             <p>
@@ -89,7 +100,6 @@
                 <p>Air Quality</p>
                 <p class="data"><?php echo $weatherData['list'][0]['clouds'] ?></p>
             </span>
-            
         </div>
         
         <div class="wind">
@@ -97,13 +107,14 @@
             <span class="text-data">
                 <p>Wind</p>
                 <p class="data">
-                    <?php 
-                        $windKmh = $weatherData['list'][0]['speed'] * 3.6;
-                        echo number_format($windKmh, 1) . " km/h";
-                    ?>
+                    <span class="wind-speed" data-km="<?php echo $weatherData['list'][0]['speed'] * 3.6; ?>">
+                        <?php 
+                            $windKmh = $weatherData['list'][0]['speed'] * 3.6;
+                            echo number_format($windKmh, 1);
+                        ?> km/h
+                    </span>
                 </p>
             </span>
-            
         </div>
 
         <div class="humidity">
@@ -167,10 +178,18 @@
         </div>
 
         <div class="days">
-            <button>Today</button>
-            <button>Tomorrow</button>
-            <button>10 Days</button>
+            <button data-day="today">Today</button>
+            <button data-day="tomorrow">Tomorrow</button>
+            <button data-day="10days">10 Days</button>
+
+            <div id="days-content"></div><!-- izvada iegūtos forecast datus no sript.js -->
         </div>
     </div>
+
+    <script>
+        // padodu php datus uz js failu
+        const weatherData = <?php echo json_encode($weatherData); ?>;
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
