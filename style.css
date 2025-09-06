@@ -1,4 +1,4 @@
-/*-----------CSS Reset-----------*/
+/* ----------CSS RESET---------- */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -17,23 +17,57 @@ time, mark, audio, video {
 	border: 0;
 }
 
-/*-----------Custom CSS-----------*/
+/* ----------CUSTOM CSS---------- */
 
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: rgb(241, 241, 241);
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* ----------NAVBAR---------- */
+.navbar {
+    grid-column: 1/6;
+    grid-row: 1;
+    position: sticky;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.navbar p {
+    margin: 0;
+}
+
+.navbar button {
+    background-color: #202932;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ----------CONTAINERS---------- */
+
 .container{
-    height: 100vh;
-    width: 100vw;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: auto repeat(5, 1fr);
     gap: 30px;
+    height: calc(100vh - 150px);
+    padding: 0 30px 30px;
+    box-sizing: border-box;
 }
 
 .navbar, .current-weather, .air-quality, .wind,
@@ -45,29 +79,14 @@ body {
     background-color: white;
 }
 
-.air-quality, .wind,
-.humidity, .visibility, .pressure-in, .pressure {
-    height: 50px;
-    width: auto;
-}
-
-.navbar {
-    grid-column: 1/6;
-    grid-row: 1;
-    position: sticky;
-    z-index: 100;
-}
-
 .current-weather {
     grid-column: 1/4;
     grid-row: 2/4;
-    margin-left: 30px;
 }
 
 .air-quality {
     grid-column: 1;
     grid-row: 4;
-    margin-left: 30px;
 }
 
 .wind {
@@ -83,7 +102,6 @@ body {
 .visibility {
     grid-column: 1;
     grid-row: 5;
-    margin-left: 30px;
 }
 
 .pressure-in {
@@ -98,15 +116,15 @@ body {
 
 .sun-moon {
     grid-column: 1/4;
-    grid-row: 6/9;
-    margin-left: 30px;
+    grid-row: 6/7;
 }
 
 .days {
     grid-column: 4/6;
-    grid-row: 2/9;
-    margin-right: 30px;
+    grid-row: 2/7;
 }
+
+/* ----------CURRENT WEATHER DATA---------- */
 
 .current-weather .weather-main-row {
     display: flex;
@@ -148,4 +166,29 @@ body {
 
 .current-weather p {
     margin-bottom: 8px;
+}
+
+/* ----------ICONS---------- */
+
+img {
+    height: 25px;
+    width: auto;
+}
+
+.air-quality, .wind, .humidity, .visibility,
+.pressure-in, .pressure {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.text-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.data {
+    font-size: 30px;
+    font-weight: bold;
 }

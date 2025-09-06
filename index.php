@@ -38,12 +38,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <p>VTDT Sky</p>
-            <p><?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country'] ?></p>
-        </nav>
+    <nav class="navbar">
+        <img src="menu.png"></img>
+        <p>VTDT Sky</p>
+        <img src="location.gif"><?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country'] ?></img>
+        <input type="text" placeholder="Search city...">
+        <button><img src="light.png"></img>Light</button>
+        <img src="notifications.gif"></img>
+        <img src="settings.gif"></img>
+    </nav>
 
+    <div class="container">
         <div class="current-weather">
             <p>Current Weather</p>
             <p><strong>Local time: <?php echo date('g:i A'); ?></strong></p>
@@ -51,7 +56,7 @@
                 <span class="weather-temp"><?php echo number_format($temp, 1); ?></span>
                 <span class="weather-side">
                     <span><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></span>
-                    <span>Feels Like <?php echo number_format($feelsLike, 1); ?>°C</span>
+                    <span>Feels Like <?php echo number_format($feelsLike, 1) . "°C"; ?></span>
                 </span>
             </div>
             <p>
@@ -64,46 +69,72 @@
         </div>
 
         <div class="air-quality">
-            <p>Air Quality</p>
+            <img src="air-quality.gif"></img>
+            <span class="text-data">
+                <p>Air Quality</p>
+                <p class="data"><?php echo $weatherData['list'][0]['clouds'] ?></p>
+            </span>
+            
         </div>
         
         <div class="wind">
-            <p>Wind</p>
-            <p>
-                <?php 
-                    $windKmh = $weatherData['list'][0]['speed'] * 3.6;
-                    echo number_format($windKmh, 1) . " km/h";
-                ?>
-            </p>
+            <img src="wind.gif"></img>
+            <span class="text-data">
+                <p>Wind</p>
+                <p class="data">
+                    <?php 
+                        $windKmh = $weatherData['list'][0]['speed'] * 3.6;
+                        echo number_format($windKmh, 1) . " km/h";
+                    ?>
+                </p>
+            </span>
+            
         </div>
 
         <div class="humidity">
-            <p>Humidity</p>
-            <p><?php echo $weatherData['list'][0]['humidity'] . "%"; ?></p>
+            <img src="humidity.gif"></img>
+            <span class="text-data">
+                <p>Humidity</p>
+                <p class="data"><?php echo $weatherData['list'][0]['humidity'] . "%"; ?></p>
+            </span>
         </div>
 
         <div class="visibility">
-            <p>Visibility</p>
+            <img src="visibility.gif"></img>
+            <span class="text-data">
+                <p>Visibility</p>
+                <p class="data">N/A</p>
+            </span>
         </div>
         
         <div class="pressure-in">
-            <p>Pressure</p>
-            <p>
-                <?php 
-                    $pressureIn = $weatherData['list'][0]['pressure'] * 0.02953;
-                    echo number_format($pressureIn, 2) . " in";
-                ?>
-            </p>
+            <img src="pressure.gif"></img>
+            <span class="text-data">
+                <p>Pressure</p>
+                <p class="data">
+                    <?php 
+                        $pressureIn = $weatherData['list'][0]['pressure'] * 0.02953;
+                        echo number_format($pressureIn, 2) . " in";
+                    ?>
+                </p>
+            </span>
         </div>
 
         <div class="pressure">
-            <p>Pressure</p>
-            <p><?php echo $weatherData['list'][0]['pressure'] . "°"; ?></p>
+            <img src="pressure.gif"></img>
+            <span class="text-data">
+                <p>Pressure</p>
+                <p class="data"><?php echo $weatherData['list'][0]['pressure'] . "°"; ?></p>
+            </span>
         </div>
 
         <div class="sun-moon">
             <p>Sun & Moon Summary</p>
+            <img src="sun.gif"></img>
+            <p>Air Quality</p>
+            <img src="sunrise.gif"></img>
             <p>Sunrise <?php echo date('g:i A', $weatherData['list'][0]['sunrise']); ?></p>
+            <img src="sunset.gif"></img>
             <p>Sunset <?php echo date('g:i A', $weatherData['list'][0]['sunset']); ?></p>
         </div>
 

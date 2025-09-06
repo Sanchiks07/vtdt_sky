@@ -1,40 +1,39 @@
 parent div -> vh, vw
 child div -> %
 
-"list": [
+ "list": [
     {
-        "dt": 1756980000,
-        "sunrise": 1756956406,
-        "sunset": 1757005773,
-        "temp": {
-        "day": 23.1,
-        "min": 15.31,
-        "max": 23.33,
-        "night": 17.52,
-        "eve": 20.8,
-        "morn": 15.44
-        },
-        "feels_like": {
-        "day": 23.22,
-        "night": 17.6,
-        "eve": 21.05,
-        "morn": 15.62
-        },
-        "pressure": 1017,
-        "humidity": 67,
-        "weather": [
+      "dt": 1757152800,
+      "sunrise": 1757129454,
+      "sunset": 1757178243,
+      "temp": {
+        "day": 24.01,
+        "min": 14.57,
+        "max": 26.35,
+        "night": 18.54,
+        "eve": 22.66,
+        "morn": 14.63
+      },
+      "feels_like": {
+        "day": 23.77,
+        "night": 18.59,
+        "eve": 22.86,
+        "morn": 14.63
+      },
+      "pressure": 1021,
+      "humidity": 50,
+      "weather": [
         {
-            "id": 500,
-            "main": "Rain",
-            "description": "light rain",
-            "icon": "10d"
+          "id": 800,
+          "main": "Clear",
+          "description": "sky is clear",
+          "icon": "01d"
         }
-        ],
-        "speed": 2.2,
-        "deg": 244,
-        "gust": 2.89,
-        "clouds": 47,
-        "pop": 1,
-        "rain": 0.41
+      ],
+      "speed": 3.72,
+      "deg": 161,
+      "gust": 9.27,
+      "clouds": 1,
+      "pop": 0
     },
 ]
