@@ -4,28 +4,27 @@
     date_default_timezone_set('Europe/Riga');
 
     function windDirection($deg) {
-        $directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-        return $directions[round($deg / 45) % 8];
+        $directions = [
+            'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
+            'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'
+        ];
+        return $directions[round($deg / 22.5) % 16];
     }
 
     $hour = (int)date('G');
 
-    if ($hour >= 6 && $hour < 18) {
+    if ($hour >= 12 && $hour < 18) {
         $temp = $weatherData['list'][0]['temp']['day'];
         $feelsLike = $weatherData['list'][0]['feels_like']['day'];
-        $label = "Day";
-    } elseif ($hour >= 18 && $hour < 22) {
-        $temp = $weatherData['list'][0]['temp']['eve'];
-        $feelsLike = $weatherData['list'][0]['feels_like']['eve'];
-        $label = "Evening";
-    } elseif ($hour >= 22 || $hour < 6) {
+    } elseif ($hour >= 0 && $hour < 5) {
         $temp = $weatherData['list'][0]['temp']['night'];
         $feelsLike = $weatherData['list'][0]['feels_like']['night'];
-        $label = "Night";
+    } elseif ($hour >= 18 || $hour < 23) {
+        $temp = $weatherData['list'][0]['temp']['eve'];
+        $feelsLike = $weatherData['list'][0]['feels_like']['eve'];
     } else {
         $temp = $weatherData['list'][0]['temp']['morn'];
         $feelsLike = $weatherData['list'][0]['feels_like']['morn'];
-        $label = "Morning";
     }
 ?>
 
@@ -39,24 +38,40 @@
 </head>
 <body>
     <nav class="navbar">
-        <img src="menu.png"></img>
-        <p>VTDT Sky</p>
-        <img src="location.gif"><?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country'] ?></img>
-        <input type="text" placeholder="Search city...">
-        <button><img src="light.png"></img>Light</button>
-        <img src="notifications.gif"></img>
-        <img src="settings.gif"></img>
+        <span class="title">
+            <button><img src="menu.png" alt="Menu"></img></button>
+            <p>VTDT Sky</p>
+        </span>
+        <span class="location">
+            <img src="location.gif" alt="Location">
+                <?php echo $weatherData['city']['name'] . ", " . $weatherData['city']['country'] ?>
+            </img>
+        </span>
+        <span class="search-switch">
+            <input type="text" placeholder="Search city...">
+            <button class="light-dark"><img src="light.png"></img>Light</button>
+        </span>
+        <span class="notif-set">
+            <button><img src="notifications.gif" alt="Notifications"></img></button>
+            <button><img src="settings.gif" alt="Settings"></img></button>
+        </span>
     </nav>
 
     <div class="container">
         <div class="current-weather">
-            <p>Current Weather</p>
+            <div class="weather-header">
+                <p>Current Weather</p>
+                <select>
+                    <option value="CK">Celsius and Kilometers</option>
+                    <option value="FM">Fahrenheit and Miles</option>
+                </select>
+            </div>
             <p><strong>Local time: <?php echo date('g:i A'); ?></strong></p>
             <div class="weather-main-row">
                 <span class="weather-temp"><?php echo number_format($temp, 1); ?></span>
                 <span class="weather-side">
-                    <span><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></span>
-                    <span>Feels Like <?php echo number_format($feelsLike, 1) . "°C"; ?></span>
+                    <p><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></p>
+                    <p>Feels Like <?php echo number_format($feelsLike, 1) . "°C"; ?></p>
                 </span>
             </div>
             <p>
@@ -129,17 +144,32 @@
         </div>
 
         <div class="sun-moon">
-            <p>Sun & Moon Summary</p>
-            <img src="sun.gif"></img>
-            <p>Air Quality</p>
-            <img src="sunrise.gif"></img>
-            <p>Sunrise <?php echo date('g:i A', $weatherData['list'][0]['sunrise']); ?></p>
-            <img src="sunset.gif"></img>
-            <p>Sunset <?php echo date('g:i A', $weatherData['list'][0]['sunset']); ?></p>
+            <span class="sun-moon-left">
+                <p>Sun & Moon Summary</p>
+                <span class="sun-air">
+                    <img src="sun.gif" alt="Sun" class="sun">
+                    <span class="air-column">
+                        <p>Air Quality</p>
+                        <p><strong><?php echo $weatherData['list'][0]['clouds'] ?></strong></p>
+                    </span>
+                </span>
+            </span>
+            <span class="set-rise">
+                <span>
+                    <img src="sunrise.gif" alt="Sunrise">
+                    <p>Sunrise<br><strong><?php echo date('g:i A', $weatherData['list'][0]['sunrise']); ?></strong></p>
+                </span>
+                <span>
+                    <img src="sunset.gif" alt="Sunset">
+                    <p>Sunset<br><strong><?php echo date('g:i A', $weatherData['list'][0]['sunset']); ?></strong></p>
+                </span>
+            </span>
         </div>
 
         <div class="days">
-            <p>10 days</p>
+            <button>Today</button>
+            <button>Tomorrow</button>
+            <button>10 Days</button>
         </div>
     </div>
 </body>
