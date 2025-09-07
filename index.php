@@ -1,5 +1,6 @@
 <?php
-    $data = file_get_contents("https://emo.lv/weather-api/forecast/?city=cesis,latvia");
+    $city = isset($_GET['city']) ? urlencode($_GET['city']) : 'cesis';
+    $data = file_get_contents("https://emo.lv/weather-api/forecast/?city={$city}");
     $weatherData = json_decode($data, true);
 
     // laika josla no api
@@ -60,7 +61,10 @@
             </div>
 
             <div class="nav-center">
-                <input type="text" placeholder="Search Location">
+                <form>
+                    <input type="text" name="city" placeholder="Search Location" value="<?php echo isset($_GET['city']) ? htmlspecialchars($_GET['city']) : 'cesis'; ?>">
+                </form>
+                
                 <button class="light-dark">
                     <img src="light.png" alt="Light Mode" class="theme-icon"> 
                     <span class="theme-text">Light</span>
@@ -192,6 +196,14 @@
                 <button data-day="10days">10 Days</button>
             </div>
             <div id="days-content"></div><!-- izvada iegūtos forecast datus no sript.js -->
+        </div>
+
+        <div id="forecast-popup" class="hidden">
+            <div class="popup-overlay"></div>
+            <div class="popup-container">
+                <button class="popup-close">&times;</button>
+                <div class="popup-content"></div>
+            </div>
         </div>
     </div>
 

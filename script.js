@@ -12,10 +12,17 @@ function convertForecastTemps(unit) {
 
         if (c && feels) {
             // today un tomorrow
-            if(unit === 'FM') {
-                el.textContent = ((parseFloat(c)*9/5)+32).toFixed(1) + "°F / Feels like " + ((parseFloat(feels)*9/5)+32).toFixed(1) + "°F";
+            const tempEl = el.querySelector('.temp');
+            const detailsEl = el.querySelector('.details');
+
+            if (unit === 'FM') {
+                const tempF = ((parseFloat(c) * 9/5) + 32).toFixed(1);
+                const feelsF = ((parseFloat(feels) * 9/5) + 32).toFixed(1);
+                tempEl.textContent = `${tempF}°F`;
+                detailsEl.innerHTML = `<div>Feels like ${feelsF}°F</div>`;
             } else {
-                el.textContent = parseFloat(c).toFixed(1) + "°C / Feels like " + parseFloat(feels).toFixed(1) + "°C";
+                tempEl.textContent = `${parseFloat(c).toFixed(1)}°C`;
+                detailsEl.innerHTML = `<div>Feels like ${parseFloat(feels).toFixed(1)}°C</div>`;
             }
         } else if (cDay && wind && humidity) {
             // 10 days
@@ -63,7 +70,7 @@ unitSelect.addEventListener('change', () => {
     convertForecastTemps(unit);
 });
 
-// datu izvadīšana priekš forecast
+// ----------FORECAST DATU IZVADĪŠANA----------
 document.addEventListener("DOMContentLoaded", () => {
     const content = document.getElementById("days-content");
 
@@ -79,7 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div class="forecast-block">` + times.map(t => `
             <div class="forecast-row">
                 <div class="forecast-time">${t.label}</div>
-                <div class="forecast-temp" data-c="${t.temp}" data-feels="${t.feels}">${t.temp}°C / Feels like ${t.feels}°C</div>
+                <div class="forecast-temp" data-c="${t.temp}" data-feels="${t.feels}">
+                    <div class="temp">${t.temp}°C</div>
+                    <div class="details">
+                        <div>Feels like ${t.feels}°C</div>
+                    </div>
+                </div>
             </div>
         `).join('') + `</div>`;
     }
@@ -96,23 +108,24 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div class="forecast-block">` + times.map(t => `
             <div class="forecast-row">
                 <div class="forecast-time">${t.label}</div>
-                <div class="forecast-temp" data-c="${t.temp}" data-feels="${t.feels}">${t.temp}°C / Feels like ${t.feels}°C</div>
+                <div class="forecast-temp" data-c="${t.temp}" data-feels="${t.feels}">
+                    <div class="temp">${t.temp}°C</div>
+                    <div class="details">
+                        <div>Feels like ${t.feels}°C</div>
+                    </div>
+                </div>
             </div>
         `).join('') + `</div>`;
     }
 
     function render10Days() {
-        return `<div class="forecast-block">` + weatherData.list.slice(2,12).map((day)=>{
-            const date = new Date(day.dt * 1000); //no api iegūst dt value un konvertē uz ms
-
-            // dabū nedēļas dienu no datuma
+        return `<div class="forecast-block">` + weatherData.list.slice(2,12).map(day => {
+            const date = new Date(day.dt * 1000);
             const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
-
-            // format date as yyyy-mm-dd
             const yyyy = date.getFullYear();
             const mm = String(date.getMonth()+1).padStart(2,'0');
             const dd = String(date.getDate()).padStart(2,'0');
-            const dateString = yyyy + '-' + mm + '-' + dd; // output izskatās šādi: 2025-09-06
+            const dateString = `${yyyy}-${mm}-${dd}`;
 
             return `
                 <div class="forecast-row">
@@ -134,20 +147,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const forecasts = { today: renderToday, tomorrow: renderTomorrow, "10days": render10Days };
 
-    // forecast pogas
+    // ----------FORECAST POGAS----------
     document.querySelectorAll(".days button").forEach(button => {
         button.addEventListener("click", () => {
             document.querySelectorAll(".days button").forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
             const day = button.getAttribute("data-day");
             content.innerHTML = forecasts[day]();
-            convertForecastTemps(unitSelect.value); // convert immediately
+            convertForecastTemps(unitSelect.value);
+
+            if(day === "10days") setup10DayPopup();
         });
     });
 
-    content.innerHTML = renderToday(); // default today
-    convertForecastTemps(unitSelect.value); // convert default
+    // defaultā renderē today
+    content.innerHTML = renderToday();
+    convertForecastTemps(unitSelect.value);
     document.querySelector('.days button[data-day="today"]').classList.add("active");
+
+    // ----------10 DAY POPUP----------
+    function setup10DayPopup() {
+        document.querySelectorAll('.forecast-temp[data-c-day]').forEach(row => {
+            row.parentElement.addEventListener('click', () => {
+                const cDay = row.getAttribute('data-c-day');
+                const wind = row.getAttribute('data-wind');
+                const humidity = row.getAttribute('data-humidity');
+
+                const popupContent = `
+                    <div class="forecast-temp" data-c-day="${cDay}" data-wind="${wind}" data-humidity="${humidity}">
+                        <div class="temp">${cDay}°C</div>
+                        <div class="details">
+                            <div>Wind: ${wind} km/h</div>
+                            <div>Humidity: ${humidity}%</div>
+                        </div>
+                    </div>
+                `;
+
+                const popup = document.getElementById('forecast-popup');
+                popup.querySelector('.popup-content').innerHTML = popupContent;
+
+                popup.classList.add('show');
+                popup.classList.remove('hidden');
+
+                convertForecastTemps(unitSelect.value);
+            });
+        });
+
+        // close popup
+        const popup = document.getElementById('forecast-popup');
+        popup.querySelector('.popup-close').addEventListener('click', () => {
+            popup.classList.remove('show');
+            setTimeout(() => popup.classList.add('hidden'), 400);
+        });
+
+        popup.querySelector('.popup-overlay').addEventListener('click', () => {
+            popup.classList.remove('show');
+            setTimeout(() => popup.classList.add('hidden'), 400);
+        });
+    }
 });
 
 // ----------LIGHT/DARK MODE----------
