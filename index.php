@@ -195,15 +195,8 @@
                 <button data-day="tomorrow">Tomorrow</button>
                 <button data-day="10days">10 Days</button>
             </div>
-            <div id="days-content"></div><!-- izvada iegūtos forecast datus no sript.js -->
-        </div>
-
-        <div id="forecast-popup" class="hidden">
-            <div class="popup-overlay"></div>
-            <div class="popup-container">
-                <button class="popup-close">&times;</button>
-                <div class="popup-content"></div>
-            </div>
+            <!-- izvada iegūtos forecast datus no sript.js -->
+            <div id="days-content"></div>
         </div>
     </div>
 
