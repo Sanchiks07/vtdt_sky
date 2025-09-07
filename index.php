@@ -20,16 +20,16 @@
     // izvēlas pareizo temp pēc diennakts laika
     $hour = (int)date('G');
 
-    if ($hour >= 12 && $hour < 18) {
+    if ($hour >= 11 && $hour < 18) { // 12:00 - 17:59
         $temp = $weatherData['list'][0]['temp']['day'];
         $feelsLike = $weatherData['list'][0]['feels_like']['day'];
-    } elseif ($hour >= 0 && $hour < 5) {
+    } elseif ($hour >= 0 && $hour < 5) { // 00:00 - 04:59
         $temp = $weatherData['list'][0]['temp']['night'];
         $feelsLike = $weatherData['list'][0]['feels_like']['night'];
-    } elseif ($hour >= 18 || $hour < 23) {
+    } elseif ($hour >= 18 && $hour < 23) { // 18:00 - 22:59
         $temp = $weatherData['list'][0]['temp']['eve'];
         $feelsLike = $weatherData['list'][0]['feels_like']['eve'];
-    } else {
+    } else { // 05:00 - 10:59
         $temp = $weatherData['list'][0]['temp']['morn'];
         $feelsLike = $weatherData['list'][0]['feels_like']['morn'];
     }
@@ -48,7 +48,9 @@
         <nav class="navbar">
             <div class="nav-left">
                 <div class="nav-menu">
-                    <button><img src="menu.png" alt="Menu"></button>
+                    <button class="menu">
+                        <img src="menu-light.png" alt="Menu Light" class="menu-icon">
+                    </button>
                     <a href="">VTDT Sky</a>
                 </div>
                 <div class="nav-location">

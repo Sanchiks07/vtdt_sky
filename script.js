@@ -151,24 +151,57 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ----------LIGHT/DARK MODE----------
-const lightDarkBtn = document.querySelector('.light-dark');
-const themeIcon = lightDarkBtn.querySelector('.theme-icon');
-const themeText = lightDarkBtn.querySelector('.theme-text');
+document.addEventListener("DOMContentLoaded", () => {
+    const lightDarkBtn = document.querySelector('.light-dark');
+    const themeIcon = lightDarkBtn.querySelector('.theme-icon');
+    const themeText = lightDarkBtn.querySelector('.theme-text');
 
-// default mode
-document.body.classList.add('light-mode');
+    const menuBtn = document.querySelector('.menu');
+    const menuIcon = menuBtn ? menuBtn.querySelector('.menu-icon') : null;
 
-lightDarkBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
-
-    if (document.body.classList.contains('dark-mode')) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
         themeIcon.src = 'dark.png';
         themeIcon.alt = 'Dark Mode';
         themeText.textContent = 'Dark';
+        if (menuIcon) {
+            menuIcon.src = 'menu-dark.png';
+            menuIcon.alt = 'Menu Dark';
+        }
     } else {
+        document.body.classList.add('light-mode');
         themeIcon.src = 'light.png';
         themeIcon.alt = 'Light Mode';
         themeText.textContent = 'Light';
+        if (menuIcon) {
+            menuIcon.src = 'menu-light.png';
+            menuIcon.alt = 'Menu Light';
+        }
     }
+
+    lightDarkBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            themeIcon.src = 'dark.png';
+            themeIcon.alt = 'Dark Mode';
+            themeText.textContent = 'Dark';
+            if (menuIcon) {
+                menuIcon.src = 'menu-dark.png';
+                menuIcon.alt = 'Menu Dark';
+            }
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.src = 'light.png';
+            themeIcon.alt = 'Light Mode';
+            themeText.textContent = 'Light';
+            if (menuIcon) {
+                menuIcon.src = 'menu-light.png';
+                menuIcon.alt = 'Menu Light';
+            }
+            localStorage.setItem('theme', 'light');
+        }
+    });
 });

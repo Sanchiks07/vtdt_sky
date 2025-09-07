@@ -100,14 +100,14 @@ body {
 .nav-center input {
     padding: 8px 16px;
     border-radius: 8px;
-    border: solid 2px #ccc;
+    border: 2px solid #ccc;
     font-size: 16px;
     width: 200px;
 }
 
 .nav-center input:focus {
     outline: none;
-    border: solid 2px #202932;
+    border: 2px solid #202932;
 }
 
 .nav-center input::placeholder {
@@ -254,7 +254,7 @@ body {
 
 .current-weather .weather-header select:focus {
     outline: none;
-    border: solid 2px #202932;
+    border: 2px solid #202932;
 }
 
 /* ----------ICONS---------- */
@@ -480,13 +480,13 @@ body.dark-mode .nav-location p {
 body.dark-mode .nav-search-mode input {
     background-color: #1f2933;
     color: white;
-    border: 1px solid #555;
+    border: 1px solid #9d9d9d;
 }
 
 body.dark-mode .current-weather select {
     background-color: #344251;
     color: white;
-    border: 1px solid #555;
+    border: 1px solid #9d9d9d;
     border-radius: 5px;
     padding: 6px 10px;
     appearance: auto;
@@ -497,4 +497,28 @@ body.dark-mode .current-weather select {
 body.dark-mode .current-weather select option {
     background-color: #1f2933;
     color: white;
+}
+
+body.dark-mode .forecast-temp .temp {
+    color: white;
+}
+
+body.dark-mode .forecast-temp .details {
+    color: #ddd;
+}
+
+body.dark-mode .weather-temp, body.dark-mode .feels-like, body.dark-mode .wind-speed {
+    color: white;
+}
+
+body.dark-mode .data {
+    color: white;
+}
+
+body.light-mode .forecast-row::after {
+    background-color: #202932;
+}
+
+body.dark-mode .forecast-row::after {
+    background-color: white;
 }
