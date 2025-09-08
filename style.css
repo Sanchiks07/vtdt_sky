@@ -17,14 +17,18 @@ time, mark, audio, video {
 	border: 0;
 }
 
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
 /* ----------CUSTOM CSS---------- */
 
 body {
     box-sizing: border-box;
     background-color: rgb(241, 241, 241);
     font-family: 'Inter', sans-serif;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 /* ----------NAVBAR---------- */
@@ -142,10 +146,10 @@ body {
 .container{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: auto repeat(5, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto;
     gap: 30px;
-    height: calc(100vh - 120px);
-    padding: 0 30px 30px;
+    min-height: 100vh;
+    padding: 0 30px;
     box-sizing: border-box;
 }
 
@@ -161,36 +165,43 @@ body {
 .current-weather {
     grid-column: 1/4;
     grid-row: 2/4;
+    max-height: 180px;
 }
 
 .air-quality {
     grid-column: 1;
     grid-row: 4;
+    max-height: 70px;
 }
 
 .wind {
     grid-column: 2;
     grid-row: 4;
+    max-height: 70px;
 }
 
 .humidity {
     grid-column: 3;
     grid-row: 4;
+    max-height: 70px;
 }
 
 .visibility {
     grid-column: 1;
     grid-row: 5;
+    max-height: 70px;
 }
 
 .pressure-in {
     grid-column: 2;
     grid-row: 5;
+    max-height: 70px;
 }
 
 .pressure {
     grid-column: 3;
     grid-row: 5;
+    max-height: 70px;
 }
 
 .sun-moon {
@@ -204,6 +215,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden; 
+    max-height: 610px;
 }
 
 /* ----------CURRENT WEATHER DATA---------- */

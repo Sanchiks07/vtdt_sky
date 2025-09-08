@@ -90,12 +90,12 @@
                 <span class="weather-temp" data-c="<?php echo $temp; ?>">
                     <?php echo number_format($temp, 1); ?>°C
                 </span>
-                <span class="weather-side">
+                <div class="weather-side">
                     <p><?php echo ucwords($weatherData['list'][0]['weather'][0]['description']); ?></p>
                     <p class="feels-like" data-c="<?php echo $feelsLike; ?>">
                         Feels Like <?php echo number_format($feelsLike, 1); ?>°C
                     </p>
-                </span>
+                </div>
             </div>
             <p>
                 Current wind direction: 
